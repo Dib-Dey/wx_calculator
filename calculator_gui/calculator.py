@@ -11,15 +11,18 @@ Different functions used in put OnButtonClick for GUI is defined here.
 
 import wx
 import gui
-from math import *
+import math
+
 class CalcFrame(gui.MyFrame):
     # constructor
     def __init__(self):
         # initialize parent class
         gui.MyFrame.__init__(self, parent=None)
 
+    # put a blank string in text when 'Clear' is clicked
     def clear(self, event):
-        self.text.SetValue('')
+        self.text_history.SetValue(str(''))
+        self.text.SetValue(str(''))
 
     def evaluate(self, event):
         """
@@ -29,15 +32,17 @@ class CalcFrame(gui.MyFrame):
         :return: evaluated **text**
         """
         try:
+            self.text_history.SetValue(str(self.text.GetValue())+str(' ='))
             self.text.SetValue(str(eval(self.text.GetValue())))
         except Exception:
             print "Error in evaluating"
 
+    # other buttons
     def multi(self, event):
         self.text.SetValue(str(self.text.GetValue())+str('*'))
 
     def divide(self, event):
-        self.text.SetValue(str(self.text.GetValue())+str('/'))
+        self.text.SetValue(str(float(self.text.GetValue()))+str('/'))
 
     def addition(self, event):
         self.text.SetValue(str(self.text.GetValue())+str('+'))
@@ -45,6 +50,35 @@ class CalcFrame(gui.MyFrame):
     def substract(self, event):
         self.text.SetValue(str(self.text.GetValue())+str('-'))
 
+    def decmal(self, event):
+        self.text.SetValue(str(self.text.GetValue()) + str('.'))
+
+    def delete_char_from_right(self, event):
+        current_string = str(self.text.GetValue())
+        self.text.SetValue(current_string[:len(current_string)-1])
+
+    def square_root(self, event):
+        self.text.SetValue(str(math.sqrt(float(self.text.GetValue()))))
+
+    def num_power(self, event):
+        self.text.SetValue(str(self.text.GetValue()) + str('**'))
+
+    def num_by_rev(self,event):
+        try:
+            _value = str('1')+str('/')+str(float(str(self.text.GetValue())))
+            self.text.SetValue(str(eval(_value)))
+        except Exception:
+            print "Error in evaluating"
+
+    def num_per(self, event):
+        _value = float(self.text.GetValue())/100
+        self.text.SetValue(str(_value))
+
+    def num_factorial(self, event):
+        _value = math.gamma(float(self.text.GetValue()))
+        self.text_history.SetValue(str(self.text.GetValue())+str('!'))
+        self.text.SetValue(str(_value))
+    #number input from 0-9
     def number_input_zero(self, event):
         if not self.text.GetValue():
             self.text.SetValue(str(0))
@@ -101,24 +135,9 @@ class CalcFrame(gui.MyFrame):
 
     def number_input_nine(self, event):
         if not self.text.GetValue():
-            self.text.SetValue(str())
+            self.text.SetValue(str(9))
         else:
             self.text.SetValue(str(self.text.GetValue()) + str(9))
-
-    def radbuttom(self, event):
-        print self.text.get_value()
-        return 10
-
-    def inv(self, event):
-        ans = eval(self.text.GetValue())
-        self.text.SetValue(str(ans))
-
-    def pi_generator(self, event):
-            self.text.SetValue(str(pi))
-
-    # put a blank string in text when 'Clear' is clicked
-    def clearFunc(self, event):
-        self.text.SetValue(str(''))
 
 if __name__ == "__main__":
     app = wx.App(False) # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
