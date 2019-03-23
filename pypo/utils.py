@@ -1,17 +1,17 @@
 """
 module having all utility functions
 
-    >>> from Python_problems import utils
+    >>> from pypo import utils
 
 """
 import os
 import shutil
-def copy_all_files_to_destination(source='', destination= ''):
+def file_mover(source='', destination= ''):
     """
     copy all files inside all directories in source directory and paste in destination directory
 
-        >>> from Python_problems import utils
-        >>> utils.copy_all_files_to_destination(r"C:\Users\ddey\Downloads\photos_and_videos")
+        >>> from pypo import utils
+        >>> utils.file_mover(r"C:\Users\ddey\Downloads\photos_and_videos")
 
     :param source: string of source path
     :param destination: string of destination path
@@ -30,3 +30,42 @@ def copy_all_files_to_destination(source='', destination= ''):
                 path_each_file = os.path.join(files_dir, files)
                 shutil.copy(path_each_file, destination)
     return("Please check the files have ben copied in ({})".format(destination))
+
+def path_converter(input_string=''):
+    """
+    converts windows path to linux and vice versa
+
+    >>> utils.path_converter("/nfs/pdx/ddey/mbev/mve_softev")
+    >>> # \\nfs\pdx\ddey\mbev\mve_softev
+
+    :param input_string:
+    :return: converted_path
+    """
+    if '\\' in input_string:
+        input_string = input_string.replace('\\','/')
+        print(input_string)
+    elif '/' in input_string:
+        input_string = input_string.replace('/','\\')
+        print (input_string)
+    else:
+        print (input_string)
+
+def file_play(input_file = ""):
+    """
+    on-going project where you can get a file and massage it a way you want
+    :param input_file: file
+    :return: not decided yet
+    """
+    import codecs
+    with codecs.open(input_file, 'r', encoding='ascii', errors='ignore') as in_file:
+        all_words = []
+        for line in in_file:
+            print(line.strip())
+            if line.strip():
+               # print(line.strip())
+                pass
+            line_words = line.split()  # split()function removes the white space
+            for words in line_words:
+                all_words.append(words)
+                # print(words)
+    #return all_words
