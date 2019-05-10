@@ -2,33 +2,7 @@
 Dey's Coding Documentation 
 ===========================================
 
-Sphinx doc is created to track all solved problem and its potential use for future references. 
-
-===========================================
-Sphinx BKM
-===========================================
-
-Get to following directory and run the command as shown below:	
-
-	>>> c:\deydocuments\coding
-	>>> sphinx-build -b html C:\deydocuments\coding\doc .\build
-
-add the module for docu in code.rst file. 
-
-	>>> automodule:: Python_problems.minion_game
-
-If you want to show docstring of individual function 
-
-	>>> need to add :members: as shown in code.rst 
-
-Need to change the html theme: `weblink <http://www.sphinx-doc.org/en/stable/theming.html>`_
-
-	>>> go to conf.py
-	>>> change the theme variable html_theme = 'classic'
-
-Any good example of docstring manipulation:
-
-	>>> https://pythonhosted.org/an_example_pypi_project/sphinx.html
+Hi! This is Dibyendu Dey's github space where he has documented all solved problems, useful tips and best-known-methods. Sphinx documentation was created to track all solved problems and its potential use for future references. 
 
 ===========================================
 Python Helps
@@ -61,6 +35,32 @@ Solved Problem Statements
    :maxdepth: 2
    
    code.rst
+
+===========================================
+Sphinx BKM
+===========================================
+
+Get to following directory and run the command as shown below:	
+
+	>>> c:\deydocuments\coding
+	>>> sphinx-build -b html C:\deydocuments\coding\doc .\build
+
+add the module for docu in code.rst file. 
+
+	>>> automodule:: Python_problems.minion_game
+
+If you want to show docstring of individual function 
+
+	>>> need to add :members: as shown in code.rst 
+
+Need to change the html theme: `weblink <http://www.sphinx-doc.org/en/stable/theming.html>`_
+
+	>>> go to conf.py
+	>>> change the theme variable html_theme = 'classic'
+
+Any good example of docstring manipulation:
+
+	>>> https://pythonhosted.org/an_example_pypi_project/sphinx.html
 
 ===========================================
 Release Methods   

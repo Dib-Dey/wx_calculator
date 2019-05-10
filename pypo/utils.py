@@ -6,6 +6,8 @@ module having all utility functions
 """
 import os
 import shutil
+import re
+
 def file_mover(source='', destination= ''):
     """
     copy all files inside all directories in source directory and paste in destination directory
@@ -50,22 +52,33 @@ def path_converter(input_string=''):
     else:
         print (input_string)
 
-def file_play(input_file = ""):
+def file_play(input_file = "", option = ""):
     """
-    on-going project where you can get a file and massage it a way you want
-    :param input_file: file
-    :return: not decided yet
+    Method which takes input file for string parsing and option to decide how to do it
+
+    :param input_file: raw input file path
+    :param option: option how to parse it
+    :return: print statement or return file
     """
     import codecs
     with codecs.open(input_file, 'r', encoding='ascii', errors='ignore') as in_file:
-        all_words = []
-        for line in in_file:
-            print(line.strip())
-            if line.strip():
-               # print(line.strip())
-                pass
-            line_words = line.split()  # split()function removes the white space
-            for words in line_words:
-                all_words.append(words)
-                # print(words)
+        if option == "email":
+            _list = ""
+            for line in in_file:
+                m = re.search('[^\s]+@intel.com', line)
+                if m:
+                    _list = _list + m.group(0) + ";"
+            print(_list)
+        else:
+            all_words = []
+            for line in in_file:
+                print(line.strip())
+                if line.strip():
+                   # print(line.strip())
+                    pass
+                line_words = line.split()  # split()function removes the white space
+                for words in line_words:
+                    all_words.append(words)
+                    # print(words)
     #return all_words
+
