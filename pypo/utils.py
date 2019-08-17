@@ -81,4 +81,36 @@ def file_play(input_file = "", option = ""):
                     all_words.append(words)
                     # print(words)
     #return all_words
+import requests
+def grep_intel_id(idsid ,column_name):
+    try:
+        r = requests.get(
+            'http://phonebook.fm.intel.com/cgi-bin/phonebook?e=%5E{}%24&d=IDSID&c={}&p=y&q=y'.format(idsid, column_name))
+        if r.text.startswith(column_name):
+            return( r.text.split('\n')[1].strip())
+    except:
+        pass
+    return('n/a')
+
+def convert_user_email(path= "", wpath=""):
+    """
+    convert a text file with Intel IDs to a format with name, email for better log visualization of log history
+    :param path: path of given file
+    :param wpath: path of saved new file
+    :return:
+    """
+    _file = open(path, "r")
+    if wpath is not "":
+        _wfile = open(wpath, "w+")
+    for item in _file:
+        _id = item.split("=")[0].strip()
+        _email = grep_intel_id(_id, "DomainAddress")
+        _name = grep_intel_id(_id, "BookName")
+        #print("{} = {} <{}>".format(_id, _name, _email))
+        _wfile.writelines("{} = {} <{}>\n".format(_id, _name, _email))
+    print("PYPO - conversion is complete. Check the new file {}".format(wpath))
+
+if __name__ == '__main__':
+    convert_user_email(r"C:\Projects\evtar_git\for_tgl_dekel\authors-transform.txt",r"C:\Projects\evtar_git\for_tgl_dekel\authors-transform.new.txt")
+
 
