@@ -94,10 +94,11 @@ def grep_intel_id(idsid ,column_name):
 
 def convert_user_email(path= "", wpath=""):
     """
-    convert a text file with Intel IDs to a format with name, email for better log visualization of log history
+    convert authors-transform.txt with IDs to a format with full name, email for better git history log visualization 
+
     :param path: path of given file
     :param wpath: path of saved new file
-    :return:
+
     """
     _file = open(path, "r")
     if wpath is not "":
