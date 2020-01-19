@@ -1,8 +1,8 @@
 from flask import render_template
-from app import app_obj
+from app import flask_obj
 
-@app_obj.route('/')
-@app_obj.route('/index')
+@flask_obj.route('/')
+@flask_obj.route('/index')
 def index():
     list_dict = [
                     {
