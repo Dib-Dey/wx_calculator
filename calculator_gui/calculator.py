@@ -13,13 +13,36 @@ import wx
 import gui
 import math
 
-class CalcFrame(gui.MyFrame):
-    # constructor
+class CalcCall(gui.MyFrame):
+    """This object is called for the CalC GUI"""
     def __init__(self):
         # initialize parent class
         gui.MyFrame.__init__(self, parent=None)
+        # Connect Events
+        self.num_perc.Bind(wx.EVT_BUTTON, self.num_per)
+        self.sqrt.Bind(wx.EVT_BUTTON, self.square_root)
+        self.x_power.Bind(wx.EVT_BUTTON, self.num_power)
+        self.num_rev.Bind(wx.EVT_BUTTON, self.num_by_rev)
+        self.Clear_Entry.Bind(wx.EVT_BUTTON, self.num_factorial)
+        self.clean.Bind(wx.EVT_BUTTON, self.clear)
+        self.m_button12.Bind(wx.EVT_BUTTON, self.delete_char_from_right)
+        self.m_button13.Bind(wx.EVT_BUTTON, self.divide)
+        self.seven.Bind(wx.EVT_BUTTON, self.number_input_seven)
+        self.eigth.Bind(wx.EVT_BUTTON, self.number_input_eight)
+        self.nine.Bind(wx.EVT_BUTTON, self.number_input_nine)
+        self.multiply.Bind(wx.EVT_BUTTON, self.multi)
+        self.four.Bind(wx.EVT_BUTTON, self.number_input_four)
+        self.five.Bind(wx.EVT_BUTTON, self.number_input_five)
+        self.six.Bind(wx.EVT_BUTTON, self.number_input_six)
+        self.minus.Bind(wx.EVT_BUTTON, self.substract)
+        self.one.Bind(wx.EVT_BUTTON, self.number_input_one)
+        self.two.Bind(wx.EVT_BUTTON, self.number_input_two)
+        self.three.Bind(wx.EVT_BUTTON, self.number_input_three)
+        self.plus.Bind(wx.EVT_BUTTON, self.addition)
+        self.zero.Bind(wx.EVT_BUTTON, self.number_input_zero)
+        self.decimal.Bind(wx.EVT_BUTTON, self.decmal)
+        self.equal.Bind(wx.EVT_BUTTON, self.evaluate)
 
-    # put a blank string in text when 'Clear' is clicked
     def clear(self, event):
         self.text_history.SetValue(str(''))
         self.text.SetValue(str(''))
@@ -35,7 +58,7 @@ class CalcFrame(gui.MyFrame):
             self.text_history.SetValue(str(self.text.GetValue())+str(' ='))
             self.text.SetValue(str(eval(self.text.GetValue())))
         except Exception:
-            print "Error in evaluating"
+            print("Error in evaluating")
 
     # other buttons
     def multi(self, event):
@@ -68,7 +91,7 @@ class CalcFrame(gui.MyFrame):
             _value = str('1')+str('/')+str(float(str(self.text.GetValue())))
             self.text.SetValue(str(eval(_value)))
         except Exception:
-            print "Error in evaluating"
+            print("Error in evaluating")
 
     def num_per(self, event):
         _value = float(self.text.GetValue())/100
@@ -141,6 +164,6 @@ class CalcFrame(gui.MyFrame):
 
 if __name__ == "__main__":
     app = wx.App(False) # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
-    frame = CalcFrame() # create an object of CalcFrame
+    frame = CalcCall() # create an object of CalcFrame
     frame.Show(True) # show the frame
     app.MainLoop() # start the applications
