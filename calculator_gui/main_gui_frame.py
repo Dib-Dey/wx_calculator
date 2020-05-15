@@ -5,18 +5,44 @@ import scientific_panel
 class MainFrame(wx.Frame):
     """This is the mainframe of the calculator where all panels are defined"""
     def __init__(self):
-        super().__init__(None, title = "Calculator",size = (600,500))
+        super().__init__(None, title = "Calculator",size = (600,600))
         self.classic_panel = classic_panel.ClassicPanel(self)
         self.sci_panel = scientific_panel.SciPanel(self)
+
         self.sci_panel.Hide()
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer.Add(self.classic_panel, 1, wx.EXPAND)
         self.sizer.Add(self.sci_panel, 1, wx.EXPAND)
         self.SetSizer(self.sizer)
         self.SetMenuBar(self.CreateMenuBar())
+        self.CreatetoolBar()
+
+    def CreatetoolBar(self):
+        """Create toolbar"""
+        self.toolbar_main = self.CreateToolBar(wx.TB_HORIZONTAL, wx.ID_ANY)
+        self.toolbar_main.SetToolBitmapSize(wx.Size(1, 1))
+        self.toolbar_main.SetToolSeparation(0)
+        self.toolbar_main.SetFont(wx.Font(8, 74, 90, 90, False, "Arial"))
+        self.toolbar_main.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_ACTIVEBORDER))
+        self.toolbar_main.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_3DLIGHT))
+        self.toolbar_main.SetMaxSize(wx.Size(-1, 2))
+        self.toolbar_main.AddSeparator()
+        self.tool_classic= self.toolbar_main.AddTool(201, u"tool",
+                                                      wx.Bitmap(u"Image/classic.bmp", wx.BITMAP_TYPE_ANY),
+                                                      wx.NullBitmap, wx.ITEM_CHECK, wx.EmptyString, wx.EmptyString,
+                                                      None)
+
+        self.toolbar_main.AddSeparator()
+        self.tool_sci = self.toolbar_main.AddTool(202, u"tool",
+                                                      wx.Bitmap(u"Image/sci.bmp", wx.BITMAP_TYPE_ANY), wx.NullBitmap,
+                                                      wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
+        self.toolbar_main.Realize()
+        self.Centre(wx.BOTH)
+        self.Bind(wx.EVT_TOOL, self.swtich, id=201)
+        self.Bind(wx.EVT_TOOL, self.swtich, id=202)
 
     def CreateMenuBar(self, with_window=False):
-        # Make a menubar
+        """Make a menubar"""
         menu_bar = wx.MenuBar()
         option_menu = wx.Menu()
         menu_bar.Append(option_menu, "&Options")
@@ -53,6 +79,7 @@ class MainFrame(wx.Frame):
         self.Layout()
 
 if __name__ == '__main__':
+    """Run the main Gui from here"""
     app = wx.App()
     MainFrame = MainFrame()
     MainFrame.Show(True)
