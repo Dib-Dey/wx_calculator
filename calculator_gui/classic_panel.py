@@ -9,7 +9,6 @@
 
 import wx
 import wx.xrc
-import math
 import function_factory
 ###########################################################################
 ## Class MyPanel1

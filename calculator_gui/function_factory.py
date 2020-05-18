@@ -13,6 +13,9 @@ def clear(event, text_history, text):
 #     evt_id.text_history.SetValue(str(''))
 #     evt_id.text.SetValue(str(''))
 
+def hex_cov(event, text):
+    """ convert any number into hex """
+
 def evaluate(event, text_history, text):
     """
     evaluate function finds the value of text which has been modified by different functions
