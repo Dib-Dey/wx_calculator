@@ -4,6 +4,7 @@ import wx
 import wx.xrc
 import function_factory
 
+
 ###########################################################################
 ## Class SciPanel
 ###########################################################################
@@ -13,19 +14,12 @@ class SciPanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.Size(600, 450),
                           style=wx.DOUBLE_BORDER | wx.TAB_TRAVERSAL)
-
         self.radio_button = 'DEC'
-        self.hex_val = 0
-        self.dec_val = 0
-        self.oct_val = 0
-        self.bin_val = 0
-        self.hex_text = 0
-        self.dec_text =0
-        self.bin_text = 0
-        self.oct_text = 0
+
+        # Formation of the GUI widgets
         bSizerP = wx.BoxSizer(wx.VERTICAL)
 
-        self.text = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,wx.TE_RIGHT)
+        self.text = wx.TextCtrl(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize, wx.TE_RIGHT)
         self.text.SetFont(wx.Font(14, 74, 90, 90, False, "Arial"))
         bSizerP.Add(self.text, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -36,11 +30,11 @@ class SciPanel(wx.Panel):
 
         hex_box.Add(self.hex_rb, 0, wx.ALL, 5)
 
-        self.hex_val = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
-                                     0 | wx.NO_BORDER)
+        self.hex_val = wx.TextCtrl(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize,
+                                   0 | wx.NO_BORDER)
         self.hex_val.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
         self.hex_val.SetFont(wx.Font(14, 74, 90, 90, False, "Arial"))
-        hex_box.Add(self.hex_val, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        hex_box.Add(self.hex_val, 1, wx.ALL, 0)
 
         bSizerP.Add(hex_box, 0, wx.EXPAND, 5)
 
@@ -52,11 +46,11 @@ class SciPanel(wx.Panel):
 
         dec_box.Add(self.dec_rb, 0, wx.ALL, 5)
 
-        self.dec_val = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
+        self.dec_val = wx.TextCtrl(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize,
                                    0 | wx.NO_BORDER)
         self.dec_val.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
         self.dec_val.SetFont(wx.Font(14, 74, 90, 90, False, "Arial"))
-        dec_box.Add(self.dec_val, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        dec_box.Add(self.dec_val, 1, wx.ALL, 0)
 
         bSizerP.Add(dec_box, 0, wx.EXPAND, 5)
 
@@ -67,11 +61,11 @@ class SciPanel(wx.Panel):
 
         oct_box.Add(self.oct_rb, 0, wx.ALL, 5)
 
-        self.oct_val = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
+        self.oct_val = wx.TextCtrl(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize,
                                    0 | wx.NO_BORDER)
         self.oct_val.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
         self.oct_val.SetFont(wx.Font(14, 74, 90, 90, False, "Arial"))
-        oct_box.Add(self.oct_val, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        oct_box.Add(self.oct_val, 1, wx.ALL, 0)
 
         bSizerP.Add(oct_box, 0, wx.EXPAND, 5)
 
@@ -82,13 +76,13 @@ class SciPanel(wx.Panel):
 
         bin_box.Add(self.bin_rb, 0, wx.ALL, 5)
 
-        self.bin_val = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize,
+        self.bin_val = wx.TextCtrl(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize,
                                    0 | wx.NO_BORDER)
         self.bin_val.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_MENU))
         self.bin_val.SetFont(wx.Font(14, 74, 90, 90, False, "Arial"))
-        bin_box.Add(self.bin_val, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bin_box.Add(self.bin_val, 1, wx.ALL, 0)
 
-        bSizerP.Add(bin_box, 0, wx.EXPAND, 0)
+        bSizerP.Add(bin_box, 0, wx.EXPAND, 5)
 
         bSizerRow1 = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -150,11 +144,11 @@ class SciPanel(wx.Panel):
 
         bSizerRow2.Add(self.m_button511, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.m_button521 = wx.Button(self, wx.ID_ANY, u"C", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_button521.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
-        self.m_button521.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.button_clear = wx.Button(self, wx.ID_ANY, u"C", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button_clear.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
+        self.button_clear.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        bSizerRow2.Add(self.m_button521, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bSizerRow2.Add(self.button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.m_button531 = wx.Button(self, wx.ID_ANY, u"DEL", wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_button531.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
@@ -326,42 +320,74 @@ class SciPanel(wx.Panel):
 
         # Connect Events
         self.Bind(wx.EVT_RADIOBUTTON, self.GetRadioButtonLabel)
-
-        #Evaluate button
+        # Evaluate button
         # self.button_plus1.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.evaluate(event,
         #                                                                                                      text_history,
         #                                                                                                      text))
-        #other buttons
-        self.m_button531.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.delete_char_from_right(event, text))
-        #number functions
-        self.button_0.Bind(wx.EVT_BUTTON,self.number_input_zero)
+        # other buttons
+        self.m_button531.Bind(wx.EVT_BUTTON,
+                              lambda event, text=self.text: function_factory.delete_char_from_right(event, text))
+        # Clear button
+        self.button_clear.Bind(wx.EVT_BUTTON, self.clear)
+        # number functions
+        self.button_0.Bind(wx.EVT_BUTTON, self.number_input_zero)
         self.button_1.Bind(wx.EVT_BUTTON, self.number_input_one)
         self.button_2.Bind(wx.EVT_BUTTON, self.number_input_two)
         self.button_3.Bind(wx.EVT_BUTTON, self.number_input_three)
         self.button_4.Bind(wx.EVT_BUTTON, self.number_input_four)
         self.button_5.Bind(wx.EVT_BUTTON, self.number_input_five)
-        self.button_6.Bind(wx.EVT_BUTTON,self.number_input_six) 
-        self.button_7.Bind(wx.EVT_BUTTON,self.number_input_seven)
-        self.button_8.Bind(wx.EVT_BUTTON,self.number_input_eight)
+        self.button_6.Bind(wx.EVT_BUTTON, self.number_input_six)
+        self.button_7.Bind(wx.EVT_BUTTON, self.number_input_seven)
+        self.button_8.Bind(wx.EVT_BUTTON, self.number_input_eight)
         self.button_9.Bind(wx.EVT_BUTTON, self.number_input_nine)
-        #symbol functions 
+
+        # symbol functions
         # self.button_div.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.divide(event, text))
         # self.button_sub.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.multi(event, text))
         # self.button_mul.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.substract(event, text))
         # self.button_plus.Bind(wx.EVT_BUTTON,
         # self.button_dec.Bind(wx.EVT_BUTTON,
-        
+
         def __del__(self):
             pass
 
     def GetRadioButtonLabel(self, event):
+        """ Bind function for clicking any of the 4 radio button"""
+        bin_disable_button = [self.button_2, self.button_3, self.button_4, self.button_5, self.button_6, self.button_7,
+                              self.button_8, self.button_9, self.A, self.B, self.C, self.D, self.E, self.F]
+        dec_disable_button = [self.A, self.B, self.C, self.D, self.E, self.F]
+        oct_disable_button = [self.button_8, self.button_9, self.A, self.B, self.C, self.D, self.E, self.F]
         rb = event.GetEventObject()
         print(f'{rb.GetLabel()} and {type(rb.GetLabel())} is clicked from Radio Group')
         self.radio_button = rb.GetLabel()
         if self.radio_button == 'DEC':
+            self.text.SetValue(self.dec_val.GetValue())
+            for item in bin_disable_button:
+                item.Enable()
+            for item in dec_disable_button:
+                item.Disable()
             self.text.SetValue(self.text.GetValue())
+        if self.radio_button == 'HEX':
+            self.text.SetValue(self.hex_val.GetValue())
+            for item in bin_disable_button:
+                item.Enable()
+        if self.radio_button == 'OCT':
+            self.text.SetValue(self.oct_val.GetValue())
+            for item in bin_disable_button:
+                item.Enable()
+            for item in oct_disable_button:
+                item.Disable()
         if self.radio_button == 'BIN':
-            self.button_3.Disable()
+            self.text.SetValue(self.bin_val.GetValue())
+            for item in bin_disable_button:
+                item.Disable()
+
+    def clear(self, event):
+        self.text.SetValue('0')
+        self.hex_val.SetValue('0')
+        self.dec_val.SetValue('0')
+        self.oct_val.SetValue('0')
+        self.bin_val.SetValue('0')
 
     def number_input_zero(self, event):
         self.eval_every_button('0')
@@ -397,21 +423,21 @@ class SciPanel(wx.Panel):
         self.text.SetValue(self.text.GetValue() + input)
         if self.radio_button == 'DEC':
             self.dec_val.SetValue(self.text.GetValue())
-            self.hex_val.SetValue(hex(eval(self.text.GetValue())))
-            self.oct_val.SetValue(oct(eval(self.text.GetValue())))
-            self.bin_val.SetValue(bin(eval(self.text.GetValue())))
+            self.hex_val.SetValue(hex(eval(self.text.GetValue().lstrip('0'))))
+            self.oct_val.SetValue(oct(eval(self.text.GetValue().lstrip('0'))))
+            self.bin_val.SetValue(bin(eval(self.text.GetValue().lstrip('0'))))
         if self.radio_button == 'HEX':
             self.hex_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(),16)))
-            self.oct_val.SetValue(oct(int(self.text.GetValue(),16)))
-            self.bin_val.SetValue(bin(int(self.text.GetValue(),16)))
+            self.dec_val.SetValue(str(int(self.text.GetValue(), 16)))
+            self.oct_val.SetValue(oct(int(self.text.GetValue(), 16)))
+            self.bin_val.SetValue(bin(int(self.text.GetValue(), 16)))
         if self.radio_button == 'OCT':
             self.oct_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(),8)))
-            self.hex_val.SetValue(hex(int(self.text.GetValue(),8)))
-            self.bin_val.SetValue(bin(int(self.text.GetValue(),8)))
+            self.dec_val.SetValue(str(int(self.text.GetValue(), 8)))
+            self.hex_val.SetValue(hex(int(self.text.GetValue(), 8)))
+            self.bin_val.SetValue(bin(int(self.text.GetValue(), 8)))
         if self.radio_button == 'BIN':
             self.bin_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(),2)))
-            self.oct_val.SetValue(oct(int(self.text.GetValue(),2)))
-            self.hex_val.SetValue(hex(int(self.text.GetValue(),2)))
+            self.dec_val.SetValue(str(int(self.text.GetValue(), 2)))
+            self.oct_val.SetValue(oct(int(self.text.GetValue(), 2)))
+            self.hex_val.SetValue(hex(int(self.text.GetValue(), 2)))

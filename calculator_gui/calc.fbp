@@ -5297,7 +5297,7 @@
             <property name="minimum_size"></property>
             <property name="name">SciPanel</property>
             <property name="pos"></property>
-            <property name="size">600,450</property>
+            <property name="size">600,549</property>
             <property name="subclass"></property>
             <property name="tooltip"></property>
             <property name="window_extra_style"></property>
@@ -5333,7 +5333,7 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizerP</property>
                 <property name="orient">wxVERTICAL</property>
@@ -5396,7 +5396,7 @@
                         <property name="validator_style">wxFILTER_NONE</property>
                         <property name="validator_type">wxDefaultValidator</property>
                         <property name="validator_variable"></property>
-                        <property name="value">11111111</property>
+                        <property name="value">0</property>
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
@@ -5584,7 +5584,7 @@
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
                                 <property name="validator_variable"></property>
-                                <property name="value"></property>
+                                <property name="value">0</property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style">wxNO_BORDER</property>
@@ -5656,7 +5656,7 @@
                                 <property name="enabled">1</property>
                                 <property name="fg"></property>
                                 <property name="floatable">1</property>
-                                <property name="font">,90,92,-1,70,0</property>
+                                <property name="font">Arial,90,92,10,74,0</property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
@@ -5774,7 +5774,7 @@
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
                                 <property name="validator_variable"></property>
-                                <property name="value"></property>
+                                <property name="value">0</property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style">wxNO_BORDER</property>
@@ -5846,7 +5846,7 @@
                                 <property name="enabled">1</property>
                                 <property name="fg"></property>
                                 <property name="floatable">1</property>
-                                <property name="font">,90,92,-1,70,0</property>
+                                <property name="font">Arial,90,92,9,74,0</property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
@@ -5964,7 +5964,7 @@
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
                                 <property name="validator_variable"></property>
-                                <property name="value"></property>
+                                <property name="value">0</property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style">wxNO_BORDER</property>
@@ -6010,7 +6010,7 @@
                         <property name="permission">none</property>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
-                            <property name="flag">wxALL</property>
+                            <property name="flag">wxALL|wxALIGN_CENTER_VERTICAL|wxEXPAND</property>
                             <property name="proportion">0</property>
                             <object class="wxRadioButton" expanded="0">
                                 <property name="BottomDockable">1</property>
@@ -6036,7 +6036,7 @@
                                 <property name="enabled">1</property>
                                 <property name="fg"></property>
                                 <property name="floatable">1</property>
-                                <property name="font">,90,92,-1,70,0</property>
+                                <property name="font">Arial,90,92,11,74,0</property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
@@ -6154,7 +6154,7 @@
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
                                 <property name="validator_variable"></property>
-                                <property name="value"></property>
+                                <property name="value">0</property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style">wxNO_BORDER</property>
