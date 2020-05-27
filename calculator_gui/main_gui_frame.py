@@ -1,13 +1,13 @@
 import wx
 import classic_panel
-import scientific_panel
+import prog_panel
 
 class MainFrame(wx.Frame):
     """This is the mainframe of the calculator where all panels are defined"""
     def __init__(self):
         super().__init__(None, title = "Calculator",size = (600,600))
         self.classic_panel = classic_panel.ClassicPanel(self)
-        self.sci_panel = scientific_panel.SciPanel(self)
+        self.sci_panel = prog_panel.SciPanel(self)
 
         self.sci_panel.Hide()
         self.sizer = wx.BoxSizer(wx.VERTICAL)
