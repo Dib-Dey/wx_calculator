@@ -6,10 +6,10 @@ import function_factory
 
 
 ###########################################################################
-## Class SciPanel
+## Class ProgPanel
 ###########################################################################
 
-class SciPanel(wx.Panel):
+class ProgPanel(wx.Panel):
 
     def __init__(self, parent):
         wx.Panel.__init__(self, parent, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.Size(600, 450),
@@ -328,10 +328,7 @@ class SciPanel(wx.Panel):
 
         # Connect Events
         self.Bind(wx.EVT_RADIOBUTTON, self.GetRadioButtonLabel)
-        # Evaluate button
-        # self.button_equal.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.evaluate(event,
-        #                                                                                                      text_history,
-        #                                                                                                      text))
+
         # other buttons
         self.m_button531.Bind(wx.EVT_BUTTON,
                               lambda event, text=self.text: function_factory.delete_char_from_right(event, text))
@@ -351,6 +348,7 @@ class SciPanel(wx.Panel):
 
         # symbol functions
         self.Lsh_b.Bind(wx.EVT_BUTTON,self.left_shift)
+        self.Rsh_b.Bind(wx.EVT_BUTTON,self.right_shift)
         # self.button_div.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.divide(event, text))
         # self.button_sub.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.multi(event, text))
         # self.button_mul.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.substract(event, text))
@@ -362,11 +360,25 @@ class SciPanel(wx.Panel):
     def __del__(self):
         pass
 
-    def left_shift(self, event):
-        self.text_history.SetValue(self.text.GetValue() + "  Lsh")
 
-    def evaluate(self):
-        
+    def left_shift(self, event):
+        self.text_history.SetValue(self.text.GetValue() + " Lsh")
+
+    def right_shift(self, event):
+        self.text_history.SetValue(self.text.GetValue() + " Rsh")
+
+    def evaluate(self, event):
+        if self.text_history.GetValue():
+            _list = self.text_history.GetValue().split(" ")
+            if _list[1] == "Lsh":
+                print(f'{eval(_list[0])} {eval(_list[2])}')
+                self.text.SetValue(str(eval(_list[0]+"**"+_list[2])))
+            elif _list[1] == "Rsh":
+                _value = int(_list[0])
+                for _ in range(int(_list[2])):
+                    _value = _value // 2
+                self.text.SetValue(str(_value))
+            self.eval_input("")
 
     def GetRadioButtonLabel(self, event):
         """ Bind function for clicking any of the 4 radio button"""
@@ -408,54 +420,57 @@ class SciPanel(wx.Panel):
         self.bin_val.SetValue('0')
 
     def check_text(func):
+        "Decorator to check whether text is clean/or in process of writing"
         def wrapper(self, input):
-            if not self.text_history.GetValue():
-                if self.text.GetValue() == '0':
-                    self.text.SetValue('')
-                func(self, input)
-            else:
+            if self.text_history.GetValue():
                 self.text_history.SetValue(self.text_history.GetValue() + " " + input)
-
+            else:
+                if input:
+                    if self.text.GetValue() == '0':
+                        self.text.SetValue('')
+                        self.text.SetValue(input)
+                    else:
+                        self.text.SetValue(self.text.GetValue() + input)
+            func(self, input)
         return wrapper
 
     def number_input_zero(self, event):
-        self.eval_every_button('0')
+        self.eval_input('0')
 
     def number_input_one(self, event):
-        self.eval_every_button('1')
+        self.eval_input('1')
    
     def number_input_two(self, event):
-        self.eval_every_button('2')
+        self.eval_input('2')
    
     def number_input_three(self, event):
-        self.eval_every_button('3')
+        self.eval_input('3')
    
     def number_input_four(self, event):
-        self.eval_every_button('4')
+        self.eval_input('4')
 
     def number_input_five(self, event):
-        self.eval_every_button('5')
+        self.eval_input('5')
    
     def number_input_six(self, event):
-        self.eval_every_button('6')
+        self.eval_input('6')
 
     def number_input_seven(self, event):
-        self.eval_every_button('7')
+        self.eval_input('7')
    
     def number_input_eight(self, event):
-        self.eval_every_button('8')
+        self.eval_input('8')
 
     def number_input_nine(self, event):
-        self.eval_every_button('9')
+        self.eval_input('9')
 
     @check_text
-    def eval_every_button(self, input):
-        self.text.SetValue(self.text.GetValue() + input)
+    def eval_input(self, input):
         if self.radio_button == 'DEC':
             self.dec_val.SetValue(self.text.GetValue())
-            self.hex_val.SetValue(hex(eval(self.text.GetValue().lstrip('0'))))
-            self.oct_val.SetValue(oct(eval(self.text.GetValue().lstrip('0'))))
-            self.bin_val.SetValue(bin(eval(self.text.GetValue().lstrip('0'))))
+            self.hex_val.SetValue(hex(eval(self.text.GetValue())))
+            self.oct_val.SetValue(oct(eval(self.text.GetValue())))
+            self.bin_val.SetValue(bin(eval(self.text.GetValue())))
         if self.radio_button == 'HEX':
             self.hex_val.SetValue(self.text.GetValue())
             self.dec_val.SetValue(str(int(self.text.GetValue(), 16)))
