@@ -1,5 +1,0 @@
-Welcome to Python Documentation's documentation!
-================================================
-
-.. automodule:: add_softev_info
-	:members:
