@@ -1,13 +1,17 @@
+#!/usr/bin/env python3.6
 import wx
 import classic_panel
 import prog_panel
+import os
+current_dir = os.getcwd()
+image_dir = os.path.join(current_dir,"Image")
 
 class MainFrame(wx.Frame):
     """This is the mainframe of the calculator where all panels are defined"""
     def __init__(self):
         super().__init__(None, title = "Calculator",size = (600,600))
         self.classic_panel = classic_panel.ClassicPanel(self)
-        self.sci_panel = prog_panel.SciPanel(self)
+        self.sci_panel = prog_panel.ProgPanel(self)
 
         self.sci_panel.Hide()
         self.sizer = wx.BoxSizer(wx.VERTICAL)
@@ -28,13 +32,13 @@ class MainFrame(wx.Frame):
         self.toolbar_main.SetMaxSize(wx.Size(-1, 2))
         self.toolbar_main.AddSeparator()
         self.tool_classic= self.toolbar_main.AddTool(201, u"tool",
-                                                      wx.Bitmap(u"Image/classic.bmp", wx.BITMAP_TYPE_ANY),
+                                                      wx.Bitmap(os.path.join(u"./Image/classic.bmp"), wx.BITMAP_TYPE_ANY),
                                                       wx.NullBitmap, wx.ITEM_CHECK, wx.EmptyString, wx.EmptyString,
                                                       None)
 
         self.toolbar_main.AddSeparator()
         self.tool_sci = self.toolbar_main.AddTool(202, u"tool",
-                                                      wx.Bitmap(u"Image/sci.bmp", wx.BITMAP_TYPE_ANY), wx.NullBitmap,
+                                                      wx.Bitmap(os.path.join(u"./Image/sci.bmp"), wx.BITMAP_TYPE_ANY), wx.NullBitmap,
                                                       wx.ITEM_NORMAL, wx.EmptyString, wx.EmptyString, None)
         self.toolbar_main.Realize()
         self.Centre(wx.BOTH)

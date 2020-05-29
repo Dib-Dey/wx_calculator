@@ -3,8 +3,7 @@
 import wx
 import wx.xrc
 import function_factory
-
-
+import functools
 ###########################################################################
 ## Class ProgPanel
 ###########################################################################
@@ -349,10 +348,14 @@ class ProgPanel(wx.Panel):
         # symbol functions
         self.Lsh_b.Bind(wx.EVT_BUTTON,self.left_shift)
         self.Rsh_b.Bind(wx.EVT_BUTTON,self.right_shift)
-        # self.button_div.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.divide(event, text))
-        # self.button_sub.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.multi(event, text))
-        # self.button_mul.Bind(wx.EVT_BUTTON, lambda event, text=self.text: function_factory.substract(event, text))
-        # self.button_plus.Bind(wx.EVT_BUTTON,
+        self.Or_b.Bind(wx.EVT_BUTTON, self.or_func)
+        self.Xor_b.Bind(wx.EVT_BUTTON, self.xor_func)
+        self.Not_b.Bind(wx.EVT_BUTTON, self.not_func)
+        self.And_b.Bind(wx.EVT_BUTTON, self.and_func)
+        self.button_div.Bind(wx.EVT_BUTTON, self.divide)
+        self.button_mul.Bind(wx.EVT_BUTTON, self.multi)
+        self.button_sub.Bind(wx.EVT_BUTTON, self.substract)
+        self.button_plus.Bind(wx.EVT_BUTTON, self.add)
         # self.button_dec.Bind(wx.EVT_BUTTON,
         #Evaluate
         self.button_equal.Bind(wx.EVT_BUTTON,self.evaluate)
@@ -360,25 +363,94 @@ class ProgPanel(wx.Panel):
     def __del__(self):
         pass
 
+    def add_question_text(function):
+        @functools.wraps(function)
+        def wrapper(self, event):
+            function(self,event)
+            self.text.SetValue("?")
+            wx.CallAfter(self.text.SetInsertionPoint,0)
+        return wrapper
 
+    @add_question_text
+    def divide(self, event):
+        "division function"
+        self.text_history.SetValue(self.dec_val.GetValue() + " ÷")
+
+    @add_question_text
+    def substract(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " -")
+
+    @add_question_text
+    def multi(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " x")
+
+    @add_question_text
+    def add(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " +")
+
+    @add_question_text
     def left_shift(self, event):
-        self.text_history.SetValue(self.text.GetValue() + " Lsh")
+        self.text_history.SetValue(self.dec_val.GetValue() + " Lsh")
 
+    @add_question_text
     def right_shift(self, event):
         self.text_history.SetValue(self.text.GetValue() + " Rsh")
+
+    @add_question_text
+    def or_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " OR")
+
+    @add_question_text
+    def xor_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " XOR")
+
+    def not_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " NOT")
+        self.text.SetValue("Press Equal to Evaluate")
+
+    @add_question_text
+    def and_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " AND")
 
     def evaluate(self, event):
         if self.text_history.GetValue():
             _list = self.text_history.GetValue().split(" ")
+            _value = int(_list[0])
+            _factor = int(self.dec_val.GetValue())
             if _list[1] == "Lsh":
-                print(f'{eval(_list[0])} {eval(_list[2])}')
-                self.text.SetValue(str(eval(_list[0]+"**"+_list[2])))
+                for _ in range(int(_factor)):
+                    _value = _value * 2
             elif _list[1] == "Rsh":
-                _value = int(_list[0])
-                for _ in range(int(_list[2])):
+                for _ in range(int(_factor)):
                     _value = _value // 2
+            elif _list[1] == "OR":
+                _value = _value | _factor
+            elif _list[1] == "XOR":
+                _value = _value ^ _factor
+            elif _list[1] == "NOT":
+                _value = ~_value
+            elif _list[1] == "AND":
+                _value = _value & _factor
+            elif _list[1] == "+":
+                _value = _value + _factor
+            elif _list[1] == "-":
+                _value = _value - _factor
+            elif _list[1] == "x":
+                _value = _value * _factor
+            elif _list[1] == "÷":
+                try:
+                    _value = _value / _factor
+                except:
+                    print(f"Invalid Number for Division")
+            if self.radio_button == 'DEC':
                 self.text.SetValue(str(_value))
-            self.eval_input("")
+            elif self.radio_button == 'HEX':
+                self.text.SetValue(hex(_value))
+            elif self.radio_button == 'OCT':
+                self.text.SetValue(oct(_value))
+            elif self.radio_button == 'BIN':
+                self.text.SetValue(bin(_value))
+        self.eval_input("")
 
     def GetRadioButtonLabel(self, event):
         """ Bind function for clicking any of the 4 radio button"""
@@ -421,16 +493,14 @@ class ProgPanel(wx.Panel):
 
     def check_text(func):
         "Decorator to check whether text is clean/or in process of writing"
+        @functools.wraps(func)
         def wrapper(self, input):
-            if self.text_history.GetValue():
-                self.text_history.SetValue(self.text_history.GetValue() + " " + input)
-            else:
-                if input:
-                    if self.text.GetValue() == '0':
-                        self.text.SetValue('')
-                        self.text.SetValue(input)
-                    else:
-                        self.text.SetValue(self.text.GetValue() + input)
+            if input:
+                if self.text.GetValue() == '0' or self.text.GetValue() == '?':
+                    self.text.SetValue('')
+                    self.text.SetValue(input)
+                else:
+                    self.text.SetValue(self.text.GetValue() + input)
             func(self, input)
         return wrapper
 
@@ -466,23 +536,28 @@ class ProgPanel(wx.Panel):
 
     @check_text
     def eval_input(self, input):
+        try:
+            _text_str = self.text.GetValue()
+            _text_int = int(self.text.GetValue())
+        except:
+            pass
         if self.radio_button == 'DEC':
-            self.dec_val.SetValue(self.text.GetValue())
-            self.hex_val.SetValue(hex(eval(self.text.GetValue())))
-            self.oct_val.SetValue(oct(eval(self.text.GetValue())))
-            self.bin_val.SetValue(bin(eval(self.text.GetValue())))
+            self.dec_val.SetValue(_text_str)
+            self.hex_val.SetValue(hex(_text_int))
+            self.oct_val.SetValue(oct(_text_int))
+            self.bin_val.SetValue(bin(_text_int))
         if self.radio_button == 'HEX':
-            self.hex_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(), 16)))
-            self.oct_val.SetValue(oct(int(self.text.GetValue(), 16)))
-            self.bin_val.SetValue(bin(int(self.text.GetValue(), 16)))
+            self.hex_val.SetValue(_text_str)
+            self.dec_val.SetValue(str(int(_text_str, 16)))
+            self.oct_val.SetValue(oct(int(_text_str, 16)))
+            self.bin_val.SetValue(bin(int(_text_str, 16)))
         if self.radio_button == 'OCT':
-            self.oct_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(), 8)))
-            self.hex_val.SetValue(hex(int(self.text.GetValue(), 8)))
-            self.bin_val.SetValue(bin(int(self.text.GetValue(), 8)))
+            self.oct_val.SetValue(_text_str)
+            self.dec_val.SetValue(str(int(_text_str, 8)))
+            self.hex_val.SetValue(hex(int(_text_str, 8)))
+            self.bin_val.SetValue(bin(int(_text_str, 8)))
         if self.radio_button == 'BIN':
-            self.bin_val.SetValue(self.text.GetValue())
-            self.dec_val.SetValue(str(int(self.text.GetValue(), 2)))
-            self.oct_val.SetValue(oct(int(self.text.GetValue(), 2)))
-            self.hex_val.SetValue(hex(int(self.text.GetValue(), 2)))
+            self.bin_val.SetValue(_text_str)
+            self.dec_val.SetValue(str(int(_text_str, 2)))
+            self.oct_val.SetValue(oct(int(_text_str, 2)))
+            self.hex_val.SetValue(hex(int(_text_str, 2)))
