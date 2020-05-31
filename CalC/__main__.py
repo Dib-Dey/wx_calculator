@@ -1,0 +1,11 @@
+import os
+
+
+def main():
+    dir_name = os.path.split(os.path.realpath(__file__))[0]
+    command_path = os.path.join(dir_name, "main_gui_frame.py")
+    os.system(command_path)
+
+
+if __name__ == '__main__':
+    main()
