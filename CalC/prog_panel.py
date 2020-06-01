@@ -140,17 +140,17 @@ class ProgPanel(wx.Panel):
 
         bSizerRow2.Add(self.b_switch, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.m_button501 = wx.Button(self, wx.ID_ANY, u"MOD", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_button501.SetFont(wx.Font(16, 74, 90, 90, False, "Arial"))
-        self.m_button501.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.button_mod = wx.Button(self, wx.ID_ANY, u"MOD", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button_mod.SetFont(wx.Font(16, 74, 90, 90, False, "Arial"))
+        self.button_mod.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        bSizerRow2.Add(self.m_button501, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bSizerRow2.Add(self.button_mod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.m_button511 = wx.Button(self, wx.ID_ANY, u"CE", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_button511.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
-        self.m_button511.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.button_ce = wx.Button(self, wx.ID_ANY, u"CE", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button_ce.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
+        self.button_ce.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        bSizerRow2.Add(self.m_button511, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bSizerRow2.Add(self.button_ce, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.button_clear = wx.Button(self, wx.ID_ANY, u"C", wx.DefaultPosition, wx.DefaultSize, 0)
         self.button_clear.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
@@ -158,11 +158,11 @@ class ProgPanel(wx.Panel):
 
         bSizerRow2.Add(self.button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.m_button531 = wx.Button(self, wx.ID_ANY, u"DEL", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.m_button531.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
-        self.m_button531.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.button_del_from_right = wx.Button(self, wx.ID_ANY, u"DEL", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button_del_from_right.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
+        self.button_del_from_right.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        bSizerRow2.Add(self.m_button531, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bSizerRow2.Add(self.button_del_from_right, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.button_div = wx.Button(self, wx.ID_ANY, u"÷", wx.DefaultPosition, wx.DefaultSize, 0)
         self.button_div.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
@@ -303,11 +303,11 @@ class ProgPanel(wx.Panel):
 
         bSizerRow6.Add(self.b_right_bracket, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
-        self.b_plus_minus = wx.Button(self, wx.ID_ANY, u"±", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.b_plus_minus.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
-        self.b_plus_minus.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
+        self.button_plus_minus = wx.Button(self, wx.ID_ANY, u"±", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.button_plus_minus.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
+        self.button_plus_minus.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        bSizerRow6.Add(self.b_plus_minus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+        bSizerRow6.Add(self.button_plus_minus, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.button_0 = wx.Button(self, wx.ID_ANY, u"0", wx.DefaultPosition, wx.DefaultSize, 0)
         self.button_0.SetFont(wx.Font(18, 74, 90, 90, False, "Arial"))
@@ -335,11 +335,12 @@ class ProgPanel(wx.Panel):
         # Connect Events
         self.Bind(wx.EVT_RADIOBUTTON, self.GetRadioButtonLabel)
 
-        # other buttons
-        self.m_button531.Bind(wx.EVT_BUTTON,
-                              lambda event, text=self.text: function_factory.delete_char_from_right(event, text))
         # Clear button
         self.button_clear.Bind(wx.EVT_BUTTON, self.clear)
+        self.button_ce.Bind(wx.EVT_BUTTON,self.clear_entry)
+        # other buttons
+        self.button_del_from_right.Bind(wx.EVT_BUTTON,self.delete_from_right)
+        self.button_plus_minus.Bind(wx.EVT_BUTTON, self.plus_minus)
         # number functions
         self.button_0.Bind(wx.EVT_BUTTON, self.number_input_zero)
         self.button_1.Bind(wx.EVT_BUTTON, self.number_input_one)
@@ -370,6 +371,7 @@ class ProgPanel(wx.Panel):
         self.button_sub.Bind(wx.EVT_BUTTON, self.substract)
         self.button_plus.Bind(wx.EVT_BUTTON, self.add)
         self.b_switch.Bind(wx.EVT_BUTTON, self.switch)
+        self.button_mod.Bind(wx.EVT_BUTTON, self.mod_func)
 
         #Evaluate
         self.button_equal.Bind(wx.EVT_BUTTON,self.evaluate)
@@ -430,119 +432,82 @@ class ProgPanel(wx.Panel):
         self.oct_val.SetValue('0')
         self.bin_val.SetValue('0')
 
-    def eval_operation(function):
-        @functools.wraps(function)
+    def clear_entry(self, Event):
+        self.text.SetValue('0')
+        self.hex_val.SetValue('0')
+        self.dec_val.SetValue('0')
+        self.oct_val.SetValue('0')
+        self.bin_val.SetValue('0')
+
+    def delete_from_right(self,Event):
+        try:
+            _value_string = self.text.GetValue()
+            _new_value_string = _value_string[0:len(_value_string)-1]
+            if _new_value_string:
+                self.text.SetValue(_new_value_string)
+                self.eval_input("")
+            else:
+                self.clear(Event)
+        except Exception as e:
+            print(e)
+            pass
+
+    def plus_minus(self, Event):
+        _value_string = self.text.GetValue()
+        if _value_string[0] == "-":
+            _new_value_string = _value_string.lstrip("-")
+        else:
+            _new_value_string = "-" + _value_string
+        if _new_value_string:
+            self.text.SetValue(_new_value_string)
+            self.eval_input("")
+
+    def input_special_operator_decorator(function):
+        """
+        Decorator for special operator like Lsh, Rsh, OR, XOR, NOR etc
+        """
         def wrapper(self, event):
-            if self.text.GetValue()!="0":
+            if self.text.GetValue() != "0":
                 self.text_history.SetValue(self.text_history.GetValue() + " " + self.text.GetValue())
-                #print(f'Debug eval_operation Info - {self.text_history.GetValue()}')
-                if self.text_history.GetValue():
-                    #print(f'Debug eval_operation Info - {eval(self.text_history.GetValue())}')
-                    try:
-                        self.text.SetValue(str(eval(self.text_history.GetValue())))
-                        self.eval_tracker = str(eval(self.text_history.GetValue()))
-                    except:
-                        pass
-                function(self,event)
-                if self.eval_tracker != "":
-                    self.text.SetValue("")
+                self.text.SetValue("")
+            function(self, event)
         return wrapper
 
-    @eval_operation
-    def left_bracket(self,event):
-        self.text_history.SetValue(self.text_history.GetValue() + " (")
+    def input_operator_decorator(function):
+        """
+        Decorator for any symbol like x, + , -, (, ), = etc...
+        """
+        @functools.wraps(function)
+        def wrapper(self, event):
+            if self.text.GetValue() != "0":
+                self.text_history.SetValue(self.text_history.GetValue() + " " + self.text.GetValue())
+            if self.text_history.GetValue():
+                #print(f'Debug input_operator_decorator Info - {eval(self.text_history.GetValue())}')
+                try:
+                    self.text.SetValue(str(eval(self.text_history.GetValue())))
+                    self.eval_tracker = str(eval(self.text_history.GetValue()))
+                except:
+                    pass
+            function(self,event)
+            #This line is to convert the self.text into oct/hex/bin/dec
+            self.eval_input("")
+        return wrapper
 
-    @eval_operation
-    def right_bracket(self,event):
-        self.text_history.SetValue(self.text_history.GetValue() + " )")
-
-    @eval_operation
-    def divide(self, event):
-        "division function"
-        self.text_history.SetValue(self.text_history.GetValue() + " /")
-
-    @eval_operation
-    def substract(self, event):
-        self.text_history.SetValue(self.text_history.GetValue() + " -")
-
-    @eval_operation
-    def multi(self, event):
-        self.text_history.SetValue(self.text_history.GetValue() + " *")
-
-    @eval_operation
-    def add(self, event):
-        self.text_history.SetValue(self.text_history.GetValue() + " +")
-
-    @eval_operation
-    def left_shift(self, event):
-        self.text_history.SetValue(self.dec_val.GetValue() + " Lsh")
-
-    @eval_operation
-    def right_shift(self, event):
-        self.text_history.SetValue(self.text.GetValue() + " Rsh")
-
-    @eval_operation
-    def or_func(self, event):
-        self.text_history.SetValue(self.dec_val.GetValue() + " OR")
-
-    @eval_operation
-    def xor_func(self, event):
-        self.text_history.SetValue(self.dec_val.GetValue() + " XOR")
-
-    def not_func(self, event):
-        self.text_history.SetValue(self.dec_val.GetValue() + " NOT")
-        self.text.SetValue("Press Equal to Evaluate")
-
-    @eval_operation
-    def and_func(self, event):
-        self.text_history.SetValue(self.dec_val.GetValue() + " AND")
-
-    @eval_operation
-    def evaluate(self, event):
-        self.eval_tracker =""
-        if self.text_history.GetValue():
-            try:
-                print(f'Evaluate following : {self.text_history.GetValue()}')
-                _value = eval(self.text_history.GetValue())
-            except:
-                _list = self.text_history.GetValue().split(" ")
-                _value = int(_list[0])
-                _factor = int(self.dec_val.GetValue())
-                if _list[1] == "Lsh":
-                    for _ in range(int(_factor)):
-                        _value = _value * 2
-                elif _list[1] == "Rsh":
-                    for _ in range(int(_factor)):
-                        _value = _value // 2
-                elif _list[1] == "OR":
-                    _value = _value | _factor
-                elif _list[1] == "XOR":
-                    _value = _value ^ _factor
-                elif _list[1] == "NOT":
-                    _value = ~_value
-                elif _list[1] == "AND":
-                    _value = _value & _factor
-                elif _list[1] == "+":
-                    _value = _value + _factor
-                elif _list[1] == "-":
-                    _value = _value - _factor
-                elif _list[1] == "x":
-                    _value = _value * _factor
-                elif _list[1] == "÷":
-                    try:
-                        _value = _value / _factor
-                    except:
-                        print(f"Invalid Number for Division")
-        if self.radio_button == 'DEC':
-            self.text.SetValue(str(_value))
-        elif self.radio_button == 'HEX':
-            self.text.SetValue(hex(_value))
-        elif self.radio_button == 'OCT':
-            self.text.SetValue(oct(_value))
-        elif self.radio_button == 'BIN':
-            self.text.SetValue(bin(_value))
-        self.text.SetValue(str(_value))
-        self.eval_input("")
+    def input_text_decorator(func):
+        """
+        Decorator to check whether text is clean/or in process of writing
+        """
+        @functools.wraps(func)
+        def wrapper(self, input):
+            print(f'Debug - input_text_decorator: eval_tracker - {self.eval_tracker}')
+            if input:
+                if self.text.GetValue() == "0" or self.eval_tracker == self.text.GetValue():
+                    #tracker variable keep evaluating history. If it matches text, set to zero and add new string next
+                    self.text.SetValue('')
+                    self.eval_tracker = ''
+                self.text.SetValue(self.text.GetValue() + input)
+            func(self, input)
+        return wrapper
 
     def input_A(self, Event):
         self.eval_input('A')
@@ -567,49 +532,139 @@ class ProgPanel(wx.Panel):
 
     def number_input_one(self, event):
         self.eval_input('1')
-   
+
     def number_input_two(self, event):
         self.eval_input('2')
-   
+
     def number_input_three(self, event):
         self.eval_input('3')
-   
+
     def number_input_four(self, event):
         self.eval_input('4')
 
     def number_input_five(self, event):
         self.eval_input('5')
-   
+
     def number_input_six(self, event):
         self.eval_input('6')
 
     def number_input_seven(self, event):
         self.eval_input('7')
-   
+
     def number_input_eight(self, event):
         self.eval_input('8')
 
     def number_input_nine(self, event):
         self.eval_input('9')
 
-    def check_text(func):
-        "Decorator to check whether text is clean/or in process of writing"
-        @functools.wraps(func)
-        def wrapper(self, input):
-            print(f'Debug Info: eval_tracker - {self.eval_tracker}')
-            if self.eval_tracker or self.text.GetValue() == "0":
-                print(f'Debug Info: setting eval_tracker and text Empty')
-                self.eval_tracker = ""
-                self.text.SetValue('')
-            if input:
-                self.text.SetValue(self.text.GetValue() + input)
-            func(self, input)
-        return wrapper
+    @input_operator_decorator
+    def mod_func(self, event):
+        self.text_history.SetValue(self.text_history.GetValue() + " %")
 
-    @check_text
+    @input_operator_decorator
+    def left_bracket(self,event):
+        self.text_history.SetValue(self.text_history.GetValue() + " (")
+
+    @input_operator_decorator
+    def right_bracket(self,event):
+        self.text_history.SetValue(self.text_history.GetValue() + " )")
+
+    @input_operator_decorator
+    def divide(self, event):
+        "division function"
+        self.text_history.SetValue(self.text_history.GetValue() + " //")
+
+    @input_operator_decorator
+    def substract(self, event):
+        self.text_history.SetValue(self.text_history.GetValue() + " -")
+
+    @input_operator_decorator
+    def multi(self, event):
+        self.text_history.SetValue(self.text_history.GetValue() + " *")
+
+    @input_operator_decorator
+    def add(self, event):
+        self.text_history.SetValue(self.text_history.GetValue() + " +")
+
+    @input_special_operator_decorator
+    def left_shift(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " Lsh")
+
+    @input_special_operator_decorator
+    def right_shift(self, event):
+        self.text_history.SetValue(self.text.GetValue() + " Rsh")
+        self.text.SetValue("")
+
+    @input_special_operator_decorator
+    def or_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " OR")
+
+    @input_special_operator_decorator
+    def xor_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " XOR")
+
+    def not_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " NOT")
+        self.text.SetValue("Press Equal to Evaluate")
+
+    @input_special_operator_decorator
+    def and_func(self, event):
+        self.text_history.SetValue(self.dec_val.GetValue() + " AND")
+
+    @input_operator_decorator
+    def evaluate(self, event):
+        """
+        It defines the characteristics of special function like Lsh, Rsh, XOR etc..
+        """
+        if self.text_history.GetValue():
+            try:
+                #try to evaluate history. It should be same as self.eval_tracker. Put tracker ""
+                #print(f'Evaluate following : {eval(self.text_history.GetValue())}')
+                self.text.SetValue(str(eval(self.text_history.GetValue())))
+                self.eval_input("")
+            except Exception as e:
+                print(e)
+                try:
+                    _list = self.text_history.GetValue().split(" ")
+                    _value = int(_list[0])
+                    _factor = int(self.dec_val.GetValue())
+                    if _list[1] == "Lsh":
+                        for _ in range(int(_factor)):
+                            _value = _value * 2
+                    elif _list[1] == "Rsh":
+                        for _ in range(int(_factor)):
+                            _value = _value // 2
+                    elif _list[1] == "OR":
+                        _value = _value | _factor
+                    elif _list[1] == "XOR":
+                        _value = _value ^ _factor
+                    elif _list[1] == "NOT":
+                        _value = ~_value
+                    elif _list[1] == "AND":
+                        _value = _value & _factor
+                    if self.radio_button == 'DEC':
+                        self.text.SetValue(str(_value))
+                    elif self.radio_button == 'HEX':
+                        self.text.SetValue(hex(_value))
+                    elif self.radio_button == 'OCT':
+                        self.text.SetValue(oct(_value))
+                    elif self.radio_button == 'BIN':
+                        self.text.SetValue(bin(_value))
+                    self.text.SetValue(str(_value))
+                    self.eval_input("")
+                except Exception as e:
+                    print(e)
+                    self.text.SetValue("ERROR")
+
+    @input_text_decorator
     def eval_input(self, input):
+        """
+        input not given --> convert the text
+        input given --> concatenate(decorator) the input to text and then convert the text
+        Goal of this function is to get any input and depending on the button condition, convert it into hex/dec/oct/Bin
+        """
         try:
-            print(f"Debug Info: eval_input {self.text.GetValue()}")
+            print(f"Debug - eval_input function try : eval_input {self.text.GetValue()}")
             _text_str = self.text.GetValue()
             _text_int = int(self.text.GetValue())
         except:
