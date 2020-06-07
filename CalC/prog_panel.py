@@ -487,7 +487,7 @@ class ProgPanel(wx.Panel):
                     self.text.SetValue(str(eval(self.text_history.GetValue())))
                     self.eval_tracker = str(eval(self.text_history.GetValue()))
                 except:
-                    pass
+                    self.eval_tracker = self.text.GetValue()
             function(self,event)
             #This line is to convert the self.text into oct/hex/bin/dec
             self.eval_input("")
@@ -561,13 +561,14 @@ class ProgPanel(wx.Panel):
     def mod_func(self, event):
         self.text_history.SetValue(self.text_history.GetValue() + " %")
 
-    @input_operator_decorator
     def left_bracket(self,event):
         self.text_history.SetValue(self.text_history.GetValue() + " (")
+        self.text.SetValue("")
 
-    @input_operator_decorator
     def right_bracket(self,event):
+        self.text_history.SetValue(self.text_history.GetValue() + " " + self.text.GetValue())
         self.text_history.SetValue(self.text_history.GetValue() + " )")
+        self.text.SetValue("")
 
     @input_operator_decorator
     def divide(self, event):
