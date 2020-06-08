@@ -656,6 +656,7 @@ class ProgPanel(wx.Panel):
                 except Exception as e:
                     print(e)
                     self.text.SetValue("ERROR")
+        self.text_history.SetValue("")
 
     @input_text_decorator
     def eval_input(self, input):
